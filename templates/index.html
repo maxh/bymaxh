@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <nav>
+      <header>
+        <h1>by maxh</h1>
+      </header>
+      <ul>
+        {% for category in categories %}
+          <li><a href="#{{ category.lower() }}">{{ category }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <main>
+      Hello!
+    </main>
+  </body>
+</html>
