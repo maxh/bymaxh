@@ -15,10 +15,6 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-DRIVE_URL = 'https://googledrive.com/'
-ROOT_DRIVE_PATH = 'host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
-YQL_URL = 'http://query.yahooapis.com/v1/public/yql?q='
-
 
 class MainPage(webapp2.RequestHandler):
 
@@ -41,6 +37,7 @@ class GetContent(webapp2.RequestHandler):
     def get(self):
         retrieveContentFromDrive()
 
+
 routes = [
     ('/', MainPage),
     ('/cron/refresh', GetContent)
@@ -50,6 +47,10 @@ app = webapp2.WSGIApplication(routes)
 
 
 """ Helper functions for retrieving the content hierarchy from Google Drive. """
+
+DRIVE_URL = 'https://googledrive.com/'
+ROOT_DRIVE_PATH = 'host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
+YQL_URL = 'http://query.yahooapis.com/v1/public/yql?q='
 
 def getYqlUrl(drive_path):
     DRIVE_QUERY = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
