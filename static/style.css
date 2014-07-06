@@ -9,6 +9,7 @@ nav {
     float: left;
     position: fixed;
     font-weight: 300;
+    padding-right: 10px;
 }
 
 nav ul {
@@ -16,7 +17,17 @@ nav ul {
 }
 
 .current-item {
-    font-weight: 600;
+    font-style: italic;
+}
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin, padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0,67,235);
 }
 
 /***********************/
@@ -26,6 +37,11 @@ nav ul {
 main {
     margin-left: 200px;
     float: left;
+}
+
+main a {
+    padding-top: 30px; /* Should be consistent with the JS scroll animation. */
+    color: rgb(80,80,80);
 }
 
 .current-section {
@@ -42,7 +58,6 @@ img {
 }
 
 section {
-    padding-top: 30px; /* Should be consistent with the JS scroll animation. */
     padding-bottom: 10px;
     transition: all 1s ease;
     opacity: .7;
