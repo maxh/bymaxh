@@ -2,7 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="static/style.css">
-    <script src="script.js"></script>
+    <script src="static/script.js"></script>
   </head>
   <body>
     <nav>
@@ -11,18 +11,27 @@
       </header>
       <ul>
         {% for category in categories %}
-          <li><a href="#{{ category.name.lower() }}">{{ category.name }}</a></li>
+          <li>
+            <a id="menu-item-{{ category.name.lower() }}"
+              href="#anchor-{{ category.name.lower() }}">
+              {{ category.name }}
+            </a>
+          </li>
         {% endfor %}
       </ul>
     </nav>
     <main>
       {% for category in categories %}
-      <h3><a id="{{ category.name.lower() }}"</a>{{ category.name }}</h3>
-        <ul class="creations-list">
+      <h3>
+        <a class="creation-anchor" id="anchor-{{ category.name.lower() }}">
+          {{ category.name }}
+        </a>
+      </h3>
+      <ul class="creation-list" id="list-{{ category.name.lower() }}">
         {% for item in category.contents %}
           <li><img src="https://googledrive.com/{{item.path}}"/></li>
         {% endfor %}
-        </ul>
+      </ul>
       {% endfor %}
     </main>
   </body>

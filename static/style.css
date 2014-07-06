@@ -12,9 +12,28 @@ nav ul {
 
 main {
     margin-left: 200px;
+    float: left;
 }
 
-.creations-list li {
+.creation-list {
+    transition: all 1s ease;
+    opacity: .7;
+}
+
+.current-list {
+    opacity: 1;
+}
+
+.creation-list li {
     margin-bottom: 10px;
     display: block;
+}
+
+h3 {
+    margin-top: 30px; /* This should be consistnt with the scroll animation. */
+    margin-bottom: 10px;
+}
+
+.current-item {
+    font-weight: bold;
 }
