@@ -13,7 +13,7 @@
         {% for category in categories %}
           <li>
             <a id="menu-item-{{ category.name.lower() }}"
-              href="#anchor-{{ category.name.lower() }}">
+               href="#anchor-{{ category.name.lower() }}">
               {{ category.name }}
             </a>
           </li>
@@ -22,17 +22,20 @@
     </nav>
     <main>
       {% for category in categories %}
-      <h3>
-        <a class="creation-anchor" id="anchor-{{ category.name.lower() }}">
-          {{ category.name }}
-        </a>
-      </h3>
-      <ul class="creation-list" id="list-{{ category.name.lower() }}">
-        {% for item in category.contents %}
+      <section id="section-{{ category.name.lower() }}">
+        <h3>
+          <a class="creation-anchor" id="anchor-{{ category.name.lower() }}">
+            {{ category.name }}
+          </a>
+        </h3>
+        <ul class="creation-list" id="list-{{ category.name.lower() }}">
+          {% for item in category.contents %}
           <li><img src="https://googledrive.com/{{item.path}}"/></li>
-        {% endfor %}
-      </ul>
+          {% endfor %}
+        </ul>
+      </section>
       {% endfor %}
+      <div id="bottom-scroll-list-buffer"></div>
     </main>
   </body>
 </html>
