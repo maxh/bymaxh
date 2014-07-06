@@ -11,15 +11,18 @@
       </header>
       <ul>
         {% for category in categories %}
-          <li><a href="#category.name.lower()">{{ category.name }}</a></li>
+          <li><a href="#{{ category.name.lower() }}">{{ category.name }}</a></li>
         {% endfor %}
       </ul>
     </nav>
     <main>
       {% for category in categories %}
+      <h3><a id="{{ category.name.lower() }}"</a>{{ category.name }}</h3>
+        <ul class="creations-list">
         {% for item in category.contents %}
-          <img src="https://googledrive.com/{{item.path}}"/>
+          <li><img src="https://googledrive.com/{{item.path}}"/></li>
         {% endfor %}
+        </ul>
       {% endfor %}
     </main>
   </body>

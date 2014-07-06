@@ -79,7 +79,7 @@ def retrieveContentFromDrive():
         category['contents'] = getDriveFolderContents(category['path'])
     existing = models.Content.query().fetch(1)
     if len(existing) == 1:
-        existing.key.delete()
+        existing[0].key.delete()
     categoriesObject = {'categories': categories}
     content = models.Content(content=str(categoriesObject))
     content.put()

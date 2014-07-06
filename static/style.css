@@ -1,7 +1,9 @@
 nav {
-    padding: 5%;
+    margin: 20px;
+    width: 160px;
     text-align: right;
     float: left;
+    position: fixed;
 }
 
 nav ul {
@@ -9,5 +11,10 @@ nav ul {
 }
 
 main {
+    margin-left: 200px;
+}
 
+.creations-list li {
+    margin-bottom: 10px;
+    display: block;
 }
