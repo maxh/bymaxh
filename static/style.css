@@ -1,13 +1,13 @@
 nav {
+    padding: 5%;
     text-align: right;
     float: left;
 }
 
 nav ul {
     list-style-type: none;
-    background-color: red;
 }
 
 main {
-    width: 60%;
+
 }

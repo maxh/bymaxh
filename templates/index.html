@@ -11,12 +11,16 @@
       </header>
       <ul>
         {% for category in categories %}
-          <li><a href="#{{ category.lower() }}">{{ category }}</a></li>
+          <li><a href="#category.name.lower()">{{ category.name }}</a></li>
         {% endfor %}
       </ul>
     </nav>
     <main>
-      Hello!
+      {% for category in categories %}
+        {% for item in category.contents %}
+          <img src="https://googledrive.com/{{item.path}}"/>
+        {% endfor %}
+      {% endfor %}
     </main>
   </body>
 </html>
