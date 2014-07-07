@@ -1,7 +1,9 @@
 var fixedNavHeight;
 
 var initWithoutImages = function() {
-    fixedNavHeight = document.querySelector('nav').offsetHeight;
+    fixedNavHeight = 0;
+    if (((window.innerWidth > 0) ? window.innerWidth : screen.width) < 600)
+        fixedNavHeight = document.querySelector('nav').offsetHeight;
     document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
     createScrollHandlers();
 };

@@ -114,6 +114,27 @@ section {
         padding-right: 10px;
     }
 
+    nav ul {
+        text-align: right;
+        margin: 0;
+        list-style-type: none;
+        padding-left: 20px; 
+        -moz-column-count: 1;
+        -moz-column-gap: 0px;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 0px;
+        column-count: 1;
+        column-gap: 0px;
+    }
+
+    .creation-list li {
+        width: 100%;
+    }
+
+    nav h1 {
+        float: none;
+    }
+
     img {
        width: 400px;
     }
