@@ -12,6 +12,11 @@ nav {
     padding-right: 10px;
 }
 
+nav h1 {
+    font-size: 2em;
+    color: black;
+}
+
 nav ul {
     list-style-type: none;
 }
@@ -40,7 +45,7 @@ main {
 }
 
 main a {
-    padding-top: 30px; /* Should be consistent with the JS scroll animation. */
+    padding-top: 30px;
     color: rgb(80,80,80);
 }
 
@@ -54,7 +59,7 @@ main a {
 }
 
 img {
-    width: 150px;
+    width: 400px;
 }
 
 section {
