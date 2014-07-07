@@ -1,7 +1,6 @@
 import ast
 import xml.etree.ElementTree as ET
 import jinja2
-import logging
 import os
 import urllib
 import urllib2
@@ -21,13 +20,9 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         content = models.Content.query().fetch(1)
         if len(content) == 0:
-            logging.info("nothing in the cache... going to the net")
             content = retrieveContentFromDrive()
         else:
-            logging.info(content[0].content)
             content = ast.literal_eval(content[0].content)
-        logging.info('Content to send to template:')
-        logging.info(content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(content))
 
@@ -36,7 +31,7 @@ class GetContent(webapp2.RequestHandler):
 
     def get(self):
         retrieveContentFromDrive()
-
+        self.response.write('Content refreshed :)')
 
 routes = [
     ('/', MainPage),
