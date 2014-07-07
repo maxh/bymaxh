@@ -53,8 +53,8 @@ ROOT_DRIVE_PATH = 'host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
 YQL_URL = 'http://query.yahooapis.com/v1/public/yql?q='
 
 def getYqlUrl(drive_path):
-    DRIVE_QUERY = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
-    return YQL_URL + urllib.quote_plus(DRIVE_QUERY)
+    driveQuery = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
+    return YQL_URL + urllib.quote_plus(drive_query)
 
 def getDriveFolderContents(drive_path):
     url = getYqlUrl(drive_path)
