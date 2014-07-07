@@ -2,27 +2,53 @@
 /* Navigation menu. */
 /********************/
 
+body {
+     margin-top: 0px;
+}
+
 nav {
-    margin: 20px;
-    width: 160px;
-    text-align: right;
-    float: left;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
     position: fixed;
     font-weight: 300;
-    padding-right: 10px;
+    background-color: #DCDCDC;
+    z-index: 10;
 }
 
 nav h1 {
     font-size: 2em;
     color: black;
+    float: left;
+    margin: 0;
+}
+
+#title-by {
+    display: block;
+}
+
+#title-maxh {
+    display: block;
 }
 
 nav ul {
+    margin: 0;
     list-style-type: none;
+    padding-left: 20px; 
+    -moz-column-count: 2;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 10px;
+    column-count: 2;
+    column-gap: 10px;
+}
+
+nav li {  
 }
 
 .current-item {
-    font-style: italic;
+    font-weight: bold;
 }
 
 body {
@@ -40,8 +66,7 @@ a {
 /***********************/
 
 main {
-    margin-left: 200px;
-    float: left;
+
 }
 
 main a {
@@ -54,12 +79,19 @@ main a {
 }
 
 .creation-list li {
-    margin-bottom: 10px;
+    padding-top: 10px;
     display: block;
+    margin-left: 5%;
+    width: 90%;
+    margin-bottom: -4px;
+}
+
+.creation-list {
+    padding: 0;
 }
 
 img {
-    width: 400px;
+    width: 100%;
 }
 
 section {
@@ -67,3 +99,27 @@ section {
     transition: all 1s ease;
     opacity: .7;
 }
+
+/******************/
+/* Desktop design */
+/******************/
+
+@media (min-width: 600px) {
+    nav {
+        margin: 20px;
+	    width: 160px;
+        text-align: right;
+        float: left;
+        font-weight: 300;
+        padding-right: 10px;
+    }
+
+    img {
+       width: 400px;
+    }
+
+    main {
+        float: left;
+        margin-left: 200px;
+    }
+}	

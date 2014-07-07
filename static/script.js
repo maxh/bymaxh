@@ -1,6 +1,8 @@
-$ = document.querySelector;
+var fixedNavHeight;
 
 var initWithoutImages = function() {
+    fixedNavHeight = document.querySelector('nav').offsetHeight;
+    document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
     createScrollHandlers();
 };
 
@@ -20,21 +22,22 @@ var createScrollHandlers = function() {
             if (sections[i].id.replace('section-','') == sectionName)
                 sectionIndex = i;
         }
-        setCurrentMenuItem(sectionIndex);
+        setCurrentMenuItem(sectionIndex); // Change link before animating.
+
         var anchorEl = document.getElementById(sectionName);
-        var bodyEl = document.querySelector('main');
+        var mainEl = document.querySelector('main');
         var scrollY = window.pageYOffset;
         window.scrollY = 0;
-        bodyEl.style.marginTop = '0px';
-        var destination = Math.max(anchorEl.offsetTop, 0);
+        mainEl.style.marginTop = 0 + 'px';
+        var destination = Math.max(anchorEl.offsetTop - fixedNavHeight, 0);
         var scrollDelta = scrollY - destination;
-        bodyEl.style.transition = 'all .5s ease';
-        bodyEl.style.marginTop = scrollDelta + 'px';
-        bodyEl.style.overflowY = 'hidden';
-        bodyEl.addEventListener('transitionend', function(event) {
+        mainEl.style.transition = 'all .5s ease';
+        mainEl.style.marginTop = scrollDelta + 'px';
+        mainEl.style.overflowY = 'hidden';
+        mainEl.addEventListener('transitionend', function(event) {
             if (event.propertyName == 'margin-top') {
-                bodyEl.style.transition = '';
-                bodyEl.style.marginTop = '0px';
+                mainEl.style.transition = '';
+                mainEl.style.marginTop = '0px';
                 window.scrollTo(0, destination);
             }
         });
@@ -87,9 +90,10 @@ var createScrollHandlers = function() {
             for (var i = 0; i < sections.length; i++)
                 if (sections[i].offsetTop - BUFFER < scroll)
                     sectionsScrolled++;
-            setCurrentMenuItem(sectionsScrolled - 1);
-            setCurrentSection(sectionsScrolled - 1);
-            updateBreakpoints(sectionsScrolled - 1);
+            sectionsScrolled--;
+            setCurrentMenuItem(sectionsScrolled);
+            setCurrentSection(sectionsScrolled);
+            updateBreakpoints(sectionsScrolled);
         }
     });
 
