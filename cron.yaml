@@ -1,0 +1,5 @@
+cron:
+- description: daily content refresh
+  url: /cron/refresh
+  schedule: every day 00:01
+  timezone: US/Pacific
