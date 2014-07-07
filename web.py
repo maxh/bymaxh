@@ -53,9 +53,7 @@ def getYqlUrl(drive_path):
 
 def getDriveFolderContents(drive_path):
     url = getYqlUrl(drive_path)
-    logging.info(url)
     response = urllib2.urlopen(url).read()
-    logging.info(response)
     root = ET.fromstring(response)
     results = root[0]
     items = []
@@ -66,7 +64,6 @@ def getDriveFolderContents(drive_path):
         }
         if item['name'] != 'Back to parent' and item['name'] != 'full_res':
             items.append(item)
-    logging.info(items)
     return items
 
 def retrieveContentFromDrive():
