@@ -129,6 +129,7 @@ section {
 
     .creation-list li {
         width: 100%;
+        margin-left: 0;
     }
 
     nav h1 {
