@@ -112,6 +112,7 @@ section {
         float: left;
         font-weight: 300;
         padding-right: 10px;
+        background-color: transparent;
     }
 
     nav ul {
