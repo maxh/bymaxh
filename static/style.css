@@ -95,6 +95,7 @@ img {
 }
 
 section {
+    will-change: opacity;
     padding-bottom: 10px;
     transition: all 1s ease;
     opacity: .7;
