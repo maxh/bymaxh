@@ -2,8 +2,10 @@ var fixedNavHeight;
 
 var initWithoutImages = function() {
   fixedNavHeight = 0;
-  if (((window.innerWidth > 0) ? window.innerWidth : screen.width) < 600)
+  var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  if (screenWidth < 600) {
     fixedNavHeight = document.querySelector('nav').offsetHeight;
+  }
   document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
   createScrollHandlers();
 };
@@ -13,18 +15,20 @@ var createScrollHandlers = function() {
 
   var sections = document.querySelectorAll('section');
   var sectionIds = [];
-  for (var i = 0; i < sections.length; i++)
-     sectionIds.push(sections[i].id.replace('section-', ''));
+  for (var i = 0; i < sections.length; i++) {
+    sectionIds.push(sections[i].id.replace('section-', ''));
+  }
 
   var scrollAnimation = function(event) {
     event.preventDefault();
     var sectionName = this.id.replace('menu-item-','');
     var sectionIndex;
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].id.replace('section-','') == sectionName)
+      if (sections[i].id.replace('section-','') == sectionName) {
         sectionIndex = i;
+      }
     }
-    setCurrentMenuItem(sectionIndex); // Change link before animating.
+    setCurrentMenuItem(sectionIndex);  // Change link before animating.
 
     var anchorEl = document.getElementById(sectionName);
     var mainEl = document.querySelector('main');
@@ -64,8 +68,7 @@ var createScrollHandlers = function() {
   var previousMenuItem = -1;
   var setCurrentMenuItem = function(index) {
     if (previousMenuItem >= 0) {
-      history.pushState({}, '',
-          '#' + sections[index].id.replace('section-', ''));
+      history.pushState({}, '', '#' + sectionIds[index]);
       if (index == previousMenuItem) return;
       menuItems[previousMenuItem].className = '';
     }
@@ -75,23 +78,23 @@ var createScrollHandlers = function() {
 
   var nextBreakpoint, prevBreakpoint;
   var updateBreakpoints = function(index) {
-    if (index < sections.length - 1)
-      nextBreakpoint = sections[index + 1].offsetTop - BUFFER;
-    else
-      nextBreakpoint = Number.POSITIVE_INFINITY
-    if (index > 0)
-      prevBreakpoint = sections[index].offsetTop - BUFFER;
-    else
-      prevBreakpoint = Number.NEGATIVE_INFINITY;
+    nextBreakpoint = index < sections.length - 1 ?
+        sections[index + 1].offsetTop - BUFFER :
+        Number.POSITIVE_INFINITY
+    prevBreakpoint = index > 0 ?
+        sections[index].offsetTop - BUFFER :
+        prevBreakpoint = Number.NEGATIVE_INFINITY;
   }
 
   window.addEventListener('scroll', function() {
     var scroll = window.pageYOffset;;
     if (scroll >= nextBreakpoint || scroll <= prevBreakpoint) {
       var sectionsScrolled = 0;
-      for (var i = 0; i < sections.length; i++)
-        if (sections[i].offsetTop - BUFFER < scroll)
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop - BUFFER < scroll) {
           sectionsScrolled++;
+        }
+      }
       sectionsScrolled--;
       setCurrentMenuItem(sectionsScrolled);
       setCurrentSection(sectionsScrolled);
@@ -109,8 +112,8 @@ var initWithImages = function() {
   var finalSection = sections[sections.length - 2];
   var bottomBuffer = window.innerHeight - finalSection.clientHeight;
   if (bottomBuffer > 0) {
-    document.querySelector('#bottom-scroll-list-buffer').style.height =
-        bottomBuffer + 'px';
+    var bottomBufferEl = document.querySelector('#bottom-scroll-list-buffer');
+    bottomBufferEl.style.height = bottomBuffer + 'px';
   }
 };
 
