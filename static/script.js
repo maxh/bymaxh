@@ -1,12 +1,6 @@
 var fixedNavHeight;
 
 var initWithoutImages = function() {
-  fixedNavHeight = 0;
-  var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-  if (screenWidth < 600) {
-    fixedNavHeight = document.querySelector('nav').offsetHeight;
-  }
-  document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
   createScrollHandlers();
 };
 
@@ -108,6 +102,12 @@ var createScrollHandlers = function() {
 };
 
 var initWithImages = function() {
+  fixedNavHeight = 0;
+  var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  if (screenWidth < 600) {
+    fixedNavHeight = document.querySelector('nav').offsetHeight;
+  }
+  document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
   var sections = document.querySelector('main').children;
   var finalSection = sections[sections.length - 2];
   var bottomBuffer = window.innerHeight - finalSection.clientHeight;

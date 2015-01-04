@@ -51,6 +51,10 @@ nav li {
     font-weight: bold;
 }
 
+:focus {
+    outline: none;
+}
+
 body {
     font-family: 'Roboto Condensed', sans-serif;
     margin, padding: 0;
