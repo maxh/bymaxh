@@ -1,6 +1,10 @@
-$ = document.querySelector;
+var fixedNavHeight;
 
 var initWithoutImages = function() {
+  fixedNavHeight = 0;
+  if (((window.innerWidth > 0) ? window.innerWidth : screen.width) < 600)
+    fixedNavHeight = document.querySelector('nav').offsetHeight;
+  document.querySelector('main').style.paddingTop = fixedNavHeight + 'px';
   createScrollHandlers();
 };
 
@@ -9,37 +13,37 @@ var createScrollHandlers = function() {
 
   var sections = document.querySelectorAll('section');
   var sectionIds = [];
-  for (var i = 0; i < sections.length; i++) {
-    sectionIds.push(sections[i].id.replace('section-', ''));
-  }
+  for (var i = 0; i < sections.length; i++)
+     sectionIds.push(sections[i].id.replace('section-', ''));
 
   var scrollAnimation = function(event) {
     event.preventDefault();
     var sectionName = this.id.replace('menu-item-','');
     var sectionIndex;
     for (var i = 0; i < sections.length; i++) {
-        if (sections[i].id.replace('section-','') == sectionName)
-            sectionIndex = i;
+      if (sections[i].id.replace('section-','') == sectionName)
+        sectionIndex = i;
     }
-    setCurrentMenuItem(sectionIndex);
+    setCurrentMenuItem(sectionIndex); // Change link before animating.
+
     var anchorEl = document.getElementById(sectionName);
-    var bodyEl = document.querySelector('main');
+    var mainEl = document.querySelector('main');
     var scrollY = window.pageYOffset;
     window.scrollY = 0;
-    bodyEl.style.marginTop = '0px';
-    var destination = Math.max(anchorEl.offsetTop, 0);
+    mainEl.style.marginTop = 0 + 'px';
+    var destination = Math.max(anchorEl.offsetTop - fixedNavHeight, 0);
     var scrollDelta = scrollY - destination;
-    bodyEl.style.transition = 'all .5s ease';
-    bodyEl.style.marginTop = scrollDelta + 'px';
-    bodyEl.style.overflowY = 'hidden';
-    bodyEl.addEventListener('transitionend', function(event) {
-        if (event.propertyName == 'margin-top') {
-            bodyEl.style.transition = '';
-            bodyEl.style.marginTop = '0px';
-            window.scrollTo(0, destination);
-        }
+    mainEl.style.transition = 'all .5s ease';
+    mainEl.style.marginTop = scrollDelta + 'px';
+    mainEl.style.overflowY = 'hidden';
+    mainEl.addEventListener('transitionend', function(event) {
+      if (event.propertyName == 'margin-top') {
+        mainEl.style.transition = '';
+        mainEl.style.marginTop = '0px';
+        window.scrollTo(0, destination);
+      }
     });
-};
+  };
 
   var menuItems = [];
   for (var i = 0; i < sectionIds.length; i++) {
@@ -59,37 +63,40 @@ var createScrollHandlers = function() {
 
   var previousMenuItem = -1;
   var setCurrentMenuItem = function(index) {
-    if (previousMenuItem >= 0) {
-      history.pushState(
-          {}, '', '#' + sections[index].id.replace('section-', ''));
-      if (index == previousMenuItem) return;
-      menuItems[previousMenuItem].className = '';
-    }
-    menuItems[index].className = 'current-item';
-    previousMenuItem = index;
+      if (previousMenuItem >= 0) {
+          history.pushState({}, '',
+              '#' + sections[index].id.replace('section-', ''));
+          if (index == previousMenuItem) return;
+          menuItems[previousMenuItem].className = '';
+      }
+      menuItems[index].className = 'current-item';
+      previousMenuItem = index;
   };
 
   var nextBreakpoint, prevBreakpoint;
   var updateBreakpoints = function(index) {
-    nextBreakpoint = index < sections.length - 1 ?
-        sections[index + 1].offsetTop - BUFFER : Number.POSITIVE_INFINITY;
-    prevBreakpoint = index > 0 ?
-        sections[index].offsetTop - BUFFER : Number.NEGATIVE_INFINITY;
+      if (index < sections.length - 1)
+          nextBreakpoint = sections[index + 1].offsetTop - BUFFER;
+      else
+          nextBreakpoint = Number.POSITIVE_INFINITY
+      if (index > 0)
+          prevBreakpoint = sections[index].offsetTop - BUFFER;
+      else
+          prevBreakpoint = Number.NEGATIVE_INFINITY;
   }
 
   window.addEventListener('scroll', function() {
-    var scroll = window.pageYOffset;;
-    if (scroll >= nextBreakpoint || scroll <= prevBreakpoint) {
-      var sectionsScrolled = 0;
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i].offsetTop - BUFFER < scroll) {
-          sectionsScrolled++;
-        }
+      var scroll = window.pageYOffset;;
+      if (scroll >= nextBreakpoint || scroll <= prevBreakpoint) {
+          var sectionsScrolled = 0;
+          for (var i = 0; i < sections.length; i++)
+              if (sections[i].offsetTop - BUFFER < scroll)
+                  sectionsScrolled++;
+          sectionsScrolled--;
+          setCurrentMenuItem(sectionsScrolled);
+          setCurrentSection(sectionsScrolled);
+          updateBreakpoints(sectionsScrolled);
       }
-      setCurrentMenuItem(sectionsScrolled - 1);
-      setCurrentSection(sectionsScrolled - 1);
-      updateBreakpoints(sectionsScrolled - 1);
-    }
   });
 
   setCurrentMenuItem(0);
@@ -102,8 +109,8 @@ var initWithImages = function() {
   var finalSection = sections[sections.length - 2];
   var bottomBuffer = window.innerHeight - finalSection.clientHeight;
   if (bottomBuffer > 0) {
-    var bottomBufferEl = document.querySelector('#bottom-scroll-list-buffer');
-    bottomBufferEl.style.height = bottomBuffer + 'px';
+      document.querySelector('#bottom-scroll-list-buffer').style.height =
+          bottomBuffer + 'px';
   }
 };
 

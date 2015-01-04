@@ -3,3 +3,4 @@
 #*
 secrets/**
 !secrets/__init__.py
+*~

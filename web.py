@@ -1,6 +1,7 @@
 import ast
 import xml.etree.ElementTree as ET
 import jinja2
+import logging
 import os
 import urllib
 import urllib2
@@ -43,12 +44,12 @@ app = webapp2.WSGIApplication(routes)
 
 """ Helper functions for retrieving the content hierarchy from Google Drive. """
 
-DRIVE_URL = 'https://googledrive.com/'
-ROOT_DRIVE_PATH = 'host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
+DRIVE_URL = 'https://googledrive.com'
+ROOT_DRIVE_PATH = '/host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
 YQL_URL = 'http://query.yahooapis.com/v1/public/yql?q='
 
 def getYqlUrl(drive_path):
-    driveQuery = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
+    drive_query = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
     return YQL_URL + urllib.quote_plus(drive_query)
 
 def getDriveFolderContents(drive_path):
