@@ -63,40 +63,40 @@ var createScrollHandlers = function() {
 
   var previousMenuItem = -1;
   var setCurrentMenuItem = function(index) {
-      if (previousMenuItem >= 0) {
-          history.pushState({}, '',
-              '#' + sections[index].id.replace('section-', ''));
-          if (index == previousMenuItem) return;
-          menuItems[previousMenuItem].className = '';
-      }
-      menuItems[index].className = 'current-item';
-      previousMenuItem = index;
+    if (previousMenuItem >= 0) {
+      history.pushState({}, '',
+          '#' + sections[index].id.replace('section-', ''));
+      if (index == previousMenuItem) return;
+      menuItems[previousMenuItem].className = '';
+    }
+    menuItems[index].className = 'current-item';
+    previousMenuItem = index;
   };
 
   var nextBreakpoint, prevBreakpoint;
   var updateBreakpoints = function(index) {
-      if (index < sections.length - 1)
-          nextBreakpoint = sections[index + 1].offsetTop - BUFFER;
-      else
-          nextBreakpoint = Number.POSITIVE_INFINITY
-      if (index > 0)
-          prevBreakpoint = sections[index].offsetTop - BUFFER;
-      else
-          prevBreakpoint = Number.NEGATIVE_INFINITY;
+    if (index < sections.length - 1)
+      nextBreakpoint = sections[index + 1].offsetTop - BUFFER;
+    else
+      nextBreakpoint = Number.POSITIVE_INFINITY
+    if (index > 0)
+      prevBreakpoint = sections[index].offsetTop - BUFFER;
+    else
+      prevBreakpoint = Number.NEGATIVE_INFINITY;
   }
 
   window.addEventListener('scroll', function() {
-      var scroll = window.pageYOffset;;
-      if (scroll >= nextBreakpoint || scroll <= prevBreakpoint) {
-          var sectionsScrolled = 0;
-          for (var i = 0; i < sections.length; i++)
-              if (sections[i].offsetTop - BUFFER < scroll)
-                  sectionsScrolled++;
-          sectionsScrolled--;
-          setCurrentMenuItem(sectionsScrolled);
-          setCurrentSection(sectionsScrolled);
-          updateBreakpoints(sectionsScrolled);
-      }
+    var scroll = window.pageYOffset;;
+    if (scroll >= nextBreakpoint || scroll <= prevBreakpoint) {
+      var sectionsScrolled = 0;
+      for (var i = 0; i < sections.length; i++)
+        if (sections[i].offsetTop - BUFFER < scroll)
+          sectionsScrolled++;
+      sectionsScrolled--;
+      setCurrentMenuItem(sectionsScrolled);
+      setCurrentSection(sectionsScrolled);
+      updateBreakpoints(sectionsScrolled);
+    }
   });
 
   setCurrentMenuItem(0);
@@ -109,8 +109,8 @@ var initWithImages = function() {
   var finalSection = sections[sections.length - 2];
   var bottomBuffer = window.innerHeight - finalSection.clientHeight;
   if (bottomBuffer > 0) {
-      document.querySelector('#bottom-scroll-list-buffer').style.height =
-          bottomBuffer + 'px';
+    document.querySelector('#bottom-scroll-list-buffer').style.height =
+        bottomBuffer + 'px';
   }
 };
 
