@@ -14,7 +14,8 @@
           <h1><span id="title-by">by </span><span id="title-maxh">maxh</span></h1>
         </header>
       </a>
-      <ul><li>
+      <ul>
+        <li>
         {% for category in categories %}
             <a id="menu-item-{{ category.name.lower() }}"
                href="#anchor-{{ category.name.lower() }}">
@@ -35,7 +36,13 @@
         </h3>
         <ul class="creation-list" id="list-{{ category.name.lower() }}">
           {% for item in category.contents %}
-          <li><img src="https://googledrive.com/{{item.path}}"/></li>
+          <li>
+            {% if item.path %}
+              <img src="https://googledrive.com/{{ item.path }}"/>
+            {% elif item.text %}
+              <p>{{ item.text }}</p>
+            {% endif %}
+          </li>
           {% endfor %}
         </ul>
       </section>

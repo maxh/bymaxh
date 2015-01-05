@@ -21,7 +21,7 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         content = models.Content.query().fetch(1)
         if len(content) == 0:
-            content = retrieveContentFromDrive()
+            content = updateContent()
         else:
             content = ast.literal_eval(content[0].content)
         template = JINJA_ENVIRONMENT.get_template('index.html')
@@ -31,7 +31,7 @@ class MainPage(webapp2.RequestHandler):
 class GetContent(webapp2.RequestHandler):
 
     def get(self):
-        retrieveContentFromDrive()
+        updateContent()
         self.response.write('Content refreshed :)')
 
 routes = [
@@ -40,7 +40,17 @@ routes = [
 ]
 app = webapp2.WSGIApplication(routes)
 
+def updateContent():
+    categories = getAllContentFromDrive()
+    categoriesObject = {'categories': categories}
 
+    # Store in Drive.
+    existing = models.Content.query().fetch(1)
+    if len(existing) == 1:
+        existing[0].key.delete()
+    content = models.Content(content=str(categoriesObject))
+    content.put()
+    return content
 
 """ Helper functions for retrieving the content hierarchy from Google Drive. """
 
@@ -49,7 +59,8 @@ ROOT_DRIVE_PATH = '/host/0B3xQvLGrxw5PeF91Smx0Z2J4dHM/'
 YQL_URL = 'http://query.yahooapis.com/v1/public/yql?q='
 
 def getYqlUrl(drive_path):
-    drive_query = 'select * from html where url="' + DRIVE_URL + drive_path + '" and xpath=\'//div[@class="folder-cell"]/a\''
+    drive_query = 'select * from html where url="' + DRIVE_URL + drive_path + \
+        '" and xpath=\'//div[@class="folder-cell"]/a\''
     return YQL_URL + urllib.quote_plus(drive_query)
 
 def getDriveFolderContents(drive_path):
@@ -67,14 +78,8 @@ def getDriveFolderContents(drive_path):
             items.append(item)
     return items
 
-def retrieveContentFromDrive():
-    categories = getDriveFolderContents(ROOT_DRIVE_PATH)
-    for category in categories:
+def getAllContentFromDrive():
+    categoriesFromDrive = getDriveFolderContents(ROOT_DRIVE_PATH)
+    for category in categoriesFromDrive:
         category['contents'] = getDriveFolderContents(category['path'])
-    existing = models.Content.query().fetch(1)
-    if len(existing) == 1:
-        existing[0].key.delete()
-    categoriesObject = {'categories': categories}
-    content = models.Content(content=str(categoriesObject))
-    content.put()
-    return categoriesObject
+    return categoriesFromDrive

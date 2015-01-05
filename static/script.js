@@ -1,8 +1,4 @@
-var fixedNavHeight;
-
-var initWithoutImages = function() {
-  createScrollHandlers();
-};
+var fixedNavHeight;  // Cached.
 
 var createScrollHandlers = function() {
   var BUFFER = 200;
@@ -101,7 +97,7 @@ var createScrollHandlers = function() {
   updateBreakpoints(0);
 };
 
-var initWithImages = function() {
+var adjustBuffers = function() {
   fixedNavHeight = 0;
   var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
   if (screenWidth < 600) {
@@ -117,5 +113,22 @@ var initWithImages = function() {
   }
 };
 
-window.addEventListener('DOMContentLoaded', initWithoutImages, false);
-window.addEventListener('load', initWithImages, false);
+var addResizeListener = (function() {
+  var running = false;
+  // fired on resize event
+  var resize = function() {
+    if (!running) {
+      running = true;
+      window.requestAnimationFrame(function() {
+        adjustBuffers();
+        running = false;
+      });
+    }
+  }
+  window.addEventListener('resize', resize);
+}());
+
+
+window.addEventListener('DOMContentLoaded', createScrollHandlers);
+window.addEventListener('load', adjustBuffers);
+addResizeListener();
